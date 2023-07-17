@@ -184,6 +184,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Car.h" />
+    <ClInclude Include="Cargo.h" />
     <ClInclude Include="CarModel.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Locomotive.h" />
