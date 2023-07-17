@@ -75,6 +75,9 @@
     <ClInclude Include="Waypoint.h">
       <Filter>Arquivos de Cabeçalho\Dto</Filter>
     </ClInclude>
+    <ClInclude Include="Segment.h">
+      <Filter>Arquivos de Cabeçalho\Dto</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TrackStudio.cpp">
