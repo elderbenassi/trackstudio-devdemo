@@ -196,6 +196,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RollingStock.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Track.h" />
     <ClInclude Include="TrackStudio.h" />
     <ClInclude Include="TrackStudioDoc.h" />
     <ClInclude Include="TrackStudioView.h" />
