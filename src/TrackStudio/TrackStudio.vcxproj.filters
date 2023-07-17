@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Dto">
+      <UniqueIdentifier>{74a242a2-4969-4d6d-abb4-7e99f7234f3f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TrackStudio.h">
@@ -44,6 +47,12 @@
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="RollingStock.h">
+      <Filter>Arquivos de Cabeçalho\Dto</Filter>
+    </ClInclude>
+    <ClInclude Include="LocomotiveModel.h">
+      <Filter>Arquivos de Cabeçalho\Dto</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
