@@ -191,6 +191,7 @@
     <ClInclude Include="Locomotive.h" />
     <ClInclude Include="LocomotiveModel.h" />
     <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="Panel.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PropertiesWnd.h" />
     <ClInclude Include="Resource.h" />
