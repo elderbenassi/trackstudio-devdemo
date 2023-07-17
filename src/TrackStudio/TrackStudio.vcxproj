@@ -186,6 +186,7 @@
     <ClInclude Include="Car.h" />
     <ClInclude Include="Cargo.h" />
     <ClInclude Include="CarModel.h" />
+    <ClInclude Include="Composition.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Locomotive.h" />
     <ClInclude Include="LocomotiveModel.h" />
