@@ -54,6 +54,9 @@
     <ClInclude Include="LocomotiveModel.h">
       <Filter>Arquivos de Cabeçalho\Dto</Filter>
     </ClInclude>
+    <ClInclude Include="CarModel.h">
+      <Filter>Arquivos de Cabeçalho\Dto</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TrackStudio.cpp">
