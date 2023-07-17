@@ -60,6 +60,9 @@
     <ClInclude Include="Car.h">
       <Filter>Arquivos de Cabeçalho\Dto</Filter>
     </ClInclude>
+    <ClInclude Include="Locomotive.h">
+      <Filter>Arquivos de Cabeçalho\Dto</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TrackStudio.cpp">

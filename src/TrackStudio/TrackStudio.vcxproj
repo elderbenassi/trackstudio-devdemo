@@ -186,6 +186,7 @@
     <ClInclude Include="Car.h" />
     <ClInclude Include="CarModel.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Locomotive.h" />
     <ClInclude Include="LocomotiveModel.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="pch.h" />
