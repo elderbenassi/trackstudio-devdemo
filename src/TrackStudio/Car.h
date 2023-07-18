@@ -4,6 +4,9 @@
 #include "Cargo.h"
 #include "CarModel.h"
 
+/// <summary>
+/// DTO for Car class
+/// </summary>
 class Car
 {
 private:

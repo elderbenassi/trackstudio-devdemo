@@ -11,6 +11,9 @@ enum CargoType
     PASSENGER
 };
 
+/// <summary>
+/// DTO class for cargo, which is the payload transported by cars
+/// </summary>
 class Cargo
 {
 private:

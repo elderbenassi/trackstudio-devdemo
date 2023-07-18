@@ -2,6 +2,9 @@
 #include <string>
 #include "LocomotiveModel.h"
 
+/// <summary>
+/// DTO for Locomotive, which is a special car with engine
+/// </summary>
 class Locomotive
 {
 private:
