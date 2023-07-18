@@ -1,5 +1,6 @@
 # trackstudio-devdemo
-Wabtec Visual C++ developer job position - Demo Project
+
+Visual C++ developer job position - Demo Project
 
 Check 'develop' branch for current code and docs.
 
