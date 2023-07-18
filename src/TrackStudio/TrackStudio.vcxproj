@@ -183,16 +183,27 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Car.h" />
+    <ClInclude Include="Cargo.h" />
+    <ClInclude Include="CarModel.h" />
+    <ClInclude Include="Composition.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Locomotive.h" />
+    <ClInclude Include="LocomotiveModel.h" />
     <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="Panel.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PropertiesWnd.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="RollingStock.h" />
+    <ClInclude Include="Segment.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Track.h" />
     <ClInclude Include="TrackStudio.h" />
     <ClInclude Include="TrackStudioDoc.h" />
     <ClInclude Include="TrackStudioView.h" />
     <ClInclude Include="ViewTree.h" />
+    <ClInclude Include="Waypoint.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp" />
