@@ -1,12 +1,14 @@
 
 // TrackStudioView.h: interface da classe CTrackStudioView
 //
-
+#include "Panel.h"
 #pragma once
 
 
 class CTrackStudioView : public CView
 {
+private:
+	Panel* panel;
 protected: // criar apenas com base na serialização
 	CTrackStudioView() noexcept;
 	DECLARE_DYNCREATE(CTrackStudioView)
