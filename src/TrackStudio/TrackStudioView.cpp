@@ -13,6 +13,9 @@
 #include "TrackStudioDoc.h"
 #include "TrackStudioView.h"
 
+#include "Panel.h"
+#include "PanelSingleton.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -35,7 +38,7 @@ END_MESSAGE_MAP()
 
 CTrackStudioView::CTrackStudioView() noexcept
 {
-	// TODO: adicione o código de construção aqui
+	Panel* panel = PanelSingleton::getInstance();
 
 }
 
