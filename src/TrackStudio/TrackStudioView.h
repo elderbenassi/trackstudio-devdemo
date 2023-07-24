@@ -19,7 +19,7 @@ public:
 
 // Operações
 private:
-	void LoadDataIntoClasses();
+	void LoadTrackFromDb();
 
 // Substitui
 public:

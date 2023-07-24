@@ -40,7 +40,7 @@ END_MESSAGE_MAP()
 CTrackStudioView::CTrackStudioView() noexcept
 {
 	panel = PanelSingleton::getInstance();
-    LoadDataIntoClasses();
+    LoadTrackFromDb();
 }
 
 CTrackStudioView::~CTrackStudioView()
@@ -69,8 +69,6 @@ void CTrackStudioView::OnDraw(CDC* /*pDC*/)
 
 
 // impressão de CTrackStudioView
-
-
 void CTrackStudioView::OnFilePrintPreview()
 {
 #ifndef SHARED_HANDLERS
@@ -107,8 +105,13 @@ void CTrackStudioView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 #endif
 }
 
-void CTrackStudioView::LoadDataIntoClasses()
+/// <summary>
+/// Loads structured Track DTO objects from SQLite Database into corresponding Panel objects. Call this method to either
+/// first draw of GUI track or subsequent updates
+/// </summary>
+void CTrackStudioView::LoadTrackFromDb()
 {
+    //Open SQLite database
     sqlite3* db;
     int rc = sqlite3_open("c:\\trackstudio.db", &db);
 
@@ -121,7 +124,7 @@ void CTrackStudioView::LoadDataIntoClasses()
         return;
     }
 
-    // Load data into Waypoint class
+    // Load all Waypoint table records into a list of Waypoint
     std::list<Waypoint> waypoints;
     const char* waypointQuery = "SELECT dbId, xCoordinate, yCoordinate, locationName FROM Waypoint";
     sqlite3_stmt* stmt;
@@ -136,6 +139,7 @@ void CTrackStudioView::LoadDataIntoClasses()
         return;
     }
   
+    //Table record iteration
     while (sqlite3_step(stmt) == SQLITE_ROW) 
     {
         int dbId = sqlite3_column_int(stmt, 0);
@@ -149,8 +153,9 @@ void CTrackStudioView::LoadDataIntoClasses()
     }
     sqlite3_finalize(stmt);
 
-    // Load data into Segment class
+    // Load all Segment table records into a list 
     std::list<Segment> segments;
+    // Queries only Segments that match the first TrackD
     const char* segmentQuery = "SELECT s.dbId, s.TrackId, s.startPointId, s.endPointId FROM Segment s WHERE s.trackId = (SELECT MIN(dbId) FROM Track)";
     rc = sqlite3_prepare_v2(db, segmentQuery, -1, &stmt, nullptr);
 
