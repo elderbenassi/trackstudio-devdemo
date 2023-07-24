@@ -10,4 +10,11 @@ private:
     int dbId;
     Waypoint startPoint;
     Waypoint endPoint;
+
+public:
+    // Constructor
+    Segment(int id, Waypoint start, Waypoint end)
+        : dbId(id), startPoint(start), endPoint(end)
+    {
+    }
 };

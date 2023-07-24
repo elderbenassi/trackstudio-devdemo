@@ -10,4 +10,14 @@ class Track
 private:
     int dbId;
     std::list<Segment> segments;
+
+public:
+    // Standard constructor
+    Track() : dbId(0), segments() {}
+
+    // Setting Constructor
+    Track(int id, const std::list<Segment>& segmentList) : dbId(id), segments(segmentList)
+    {      
+    }
+
 };

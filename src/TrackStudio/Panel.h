@@ -10,8 +10,16 @@
 class Panel
 {
 private:
-    int dbId;
-    std::string backgroundImage;
-    Track track;
-    std::list<Composition> compositions;
+    int _dbId;
+    std::string _backgroundImage;
+    Track _track;
+    std::list<Composition> _compositions;
+public:
+    // Standard constructor
+    Panel() : _dbId(0), _backgroundImage(""), _track(), _compositions() {}
+
+    void SetTrack(Track track)
+    {
+        _track = track;
+    }
 };

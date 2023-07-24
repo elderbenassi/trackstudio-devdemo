@@ -14,6 +14,6 @@ public:
     static Panel* getInstance();
         
     // Prevent other instances of Panel
-    PanelSingleton(const PanelSingleton&) = delete;
-    PanelSingleton& operator=(const PanelSingleton&) = delete;
+    //PanelSingleton(const PanelSingleton&) = delete;
+    //PanelSingleton& operator=(const PanelSingleton&) = delete;
 };

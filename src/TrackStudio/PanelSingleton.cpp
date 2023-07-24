@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "PanelSingleton.h"
 
 Panel* PanelSingleton::instance = nullptr;
