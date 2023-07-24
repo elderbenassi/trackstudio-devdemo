@@ -16,10 +16,11 @@
 #include "Panel.h"
 #include "PanelSingleton.h"
 
+#include "sqlite/sqlite3.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
 
 // CTrackStudioView
 
@@ -38,8 +39,8 @@ END_MESSAGE_MAP()
 
 CTrackStudioView::CTrackStudioView() noexcept
 {
-	Panel* panel = PanelSingleton::getInstance();
-
+	panel = PanelSingleton::getInstance();
+    LoadTrackFromDb();
 }
 
 CTrackStudioView::~CTrackStudioView()
@@ -68,8 +69,6 @@ void CTrackStudioView::OnDraw(CDC* /*pDC*/)
 
 
 // impressão de CTrackStudioView
-
-
 void CTrackStudioView::OnFilePrintPreview()
 {
 #ifndef SHARED_HANDLERS
@@ -104,6 +103,105 @@ void CTrackStudioView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 #ifndef SHARED_HANDLERS
 	theApp.GetContextMenuManager()->ShowPopupMenu(IDR_POPUP_EDIT, point.x, point.y, this, TRUE);
 #endif
+}
+
+/// <summary>
+/// Loads structured Track DTO objects from SQLite Database into corresponding Panel objects. Call this method to either
+/// first draw of GUI track or subsequent updates
+/// </summary>
+void CTrackStudioView::LoadTrackFromDb()
+{
+    //Open SQLite database
+    sqlite3* db;
+    int rc = sqlite3_open("c:\\trackstudio.db", &db);
+
+    if (rc != SQLITE_OK)
+    {
+        CString prefix = _T("Error opening database: ");
+        CString errorMessage = prefix + CString(sqlite3_errmsg(db));
+        AfxMessageBox(errorMessage, MB_ICONERROR | MB_OK);
+        sqlite3_close(db);
+        return;
+    }
+
+    // Load all Waypoint table records into a list of Waypoint
+    std::list<Waypoint> waypoints;
+    const char* waypointQuery = "SELECT dbId, xCoordinate, yCoordinate, locationName FROM Waypoint";
+    sqlite3_stmt* stmt;
+    rc = sqlite3_prepare_v2(db, waypointQuery, -1, &stmt, nullptr);
+
+    if (rc != SQLITE_OK)
+    {
+        CString prefix = _T("Error loading Waypoints: ");
+        CString errorMessage = prefix + CString(sqlite3_errmsg(db));
+        AfxMessageBox(errorMessage, MB_ICONERROR | MB_OK);
+        sqlite3_close(db);
+        return;
+    }
+  
+    //Table record iteration
+    while (sqlite3_step(stmt) == SQLITE_ROW) 
+    {
+        int dbId = sqlite3_column_int(stmt, 0);
+        int xCoordinate = sqlite3_column_int(stmt, 1);
+        int yCoordinate = sqlite3_column_int(stmt, 2);
+        const char* locationName = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3));
+
+        Waypoint waypoint(dbId, xCoordinate, yCoordinate, locationName);
+         
+        waypoints.push_back(waypoint);
+    }
+    sqlite3_finalize(stmt);
+
+    // Load all Segment table records into a list 
+    std::list<Segment> segments;
+    // Queries only Segments that match the first TrackD
+    const char* segmentQuery = "SELECT s.dbId, s.TrackId, s.startPointId, s.endPointId FROM Segment s WHERE s.trackId = (SELECT MIN(dbId) FROM Track)";
+    rc = sqlite3_prepare_v2(db, segmentQuery, -1, &stmt, nullptr);
+
+    if (rc != SQLITE_OK)
+    {
+        CString prefix = _T("Error loading Segments: ");
+        CString errorMessage = prefix + CString(sqlite3_errmsg(db));
+        AfxMessageBox(errorMessage, MB_ICONERROR | MB_OK);
+        sqlite3_close(db);
+        return;
+    }
+
+    while (sqlite3_step(stmt) == SQLITE_ROW) 
+    {
+        int dbId = sqlite3_column_int(stmt, 0);
+        int startPointId = sqlite3_column_int(stmt, 2);
+        int endPointId = sqlite3_column_int(stmt, 3);
+
+        // Find corresponding waypoints for start and end points
+        Waypoint startPoint, endPoint;
+
+        for (auto& waypoint : waypoints) 
+        {
+            if (waypoint.GetId() == startPointId)
+            {
+                startPoint = waypoint;
+            }
+            else if (waypoint.GetId() == endPointId)
+            {
+                endPoint = waypoint;
+            }
+        }
+
+        Segment segment (dbId, startPoint, endPoint);
+
+        segments.push_back(segment);
+    }
+    sqlite3_finalize(stmt);
+
+    //TODO: Get the track id from DB
+    Track track (1, segments);
+
+    panel->SetTrack(track);
+    
+    // Close the database connection
+    sqlite3_close(db);
 }
 
 

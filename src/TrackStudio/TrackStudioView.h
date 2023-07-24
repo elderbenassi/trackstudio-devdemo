@@ -8,7 +8,7 @@
 class CTrackStudioView : public CView
 {
 private:
-	Panel* panel;
+	Panel *panel;
 protected: // criar apenas com base na serialização
 	CTrackStudioView() noexcept;
 	DECLARE_DYNCREATE(CTrackStudioView)
@@ -18,7 +18,8 @@ public:
 	CTrackStudioDoc* GetDocument() const;
 
 // Operações
-public:
+private:
+	void LoadTrackFromDb();
 
 // Substitui
 public:

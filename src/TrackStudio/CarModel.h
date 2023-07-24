@@ -11,7 +11,7 @@ enum CarType
     BOX_WAGON,
     TANKER,
     HOPPER,
-    PASSENGER,
+    PASSENGER_WAGON,
     NON_REVENUE
 };
 
