@@ -10,6 +10,8 @@
 #include "TrackStudio.h"
 #endif
 
+#include <atlimage.h>
+
 #include "TrackStudioDoc.h"
 #include "TrackStudioView.h"
 
@@ -41,6 +43,7 @@ CTrackStudioView::CTrackStudioView() noexcept
 {
 	panel = PanelSingleton::getInstance();
     LoadTrackFromDb();
+    LoadMapImg();
 }
 
 CTrackStudioView::~CTrackStudioView()
@@ -57,15 +60,18 @@ BOOL CTrackStudioView::PreCreateWindow(CREATESTRUCT& cs)
 
 // desenho de CTrackStudioView
 
-void CTrackStudioView::OnDraw(CDC* /*pDC*/)
+void CTrackStudioView::OnDraw(CDC* pDC)
 {
 	CTrackStudioDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
 
-	// TODO: adicione o código de desenho para dados nativos aqui
+    CRect rectClient;
+    GetClientRect(rectClient);
+    DrawMapImg(pDC);
 }
+
 
 
 // impressão de CTrackStudioView
@@ -204,6 +210,47 @@ void CTrackStudioView::LoadTrackFromDb()
     sqlite3_close(db);
 }
 
+/// <summary>
+/// Load image map from file
+/// </summary>
+void CTrackStudioView::LoadMapImg()
+{
+    m_pngImage.Destroy();
+    m_pngImage.Load(m_mapFilePath);
+}
+
+/// <summary>
+/// Draw the Panel map backgroud from loaded m_pngImage
+/// </summary>
+/// <param name="pDC"></param>
+void CTrackStudioView::DrawMapImg(CDC* pDC)
+{
+    if (m_pngImage.IsNull())
+    {
+        return;
+    }
+
+    // Draw the image using CImage::Draw
+    m_pngImage.Draw(pDC->GetSafeHdc(), 0, 0, m_pngImage.GetWidth(), m_pngImage.GetHeight());
+
+    // Get the image size
+    int imgWidth = m_pngImage.GetWidth();
+    int imgHeight = m_pngImage.GetHeight();
+
+    // Resize the frame window to fit the image size
+    CFrameWnd* pFrameWnd = GetParentFrame();
+    if (pFrameWnd)
+    {
+        CRect rectFrame;
+        pFrameWnd->GetWindowRect(&rectFrame);
+
+        // Calculate the new window size based on the image size
+        int newWidth = imgWidth + GetSystemMetrics(SM_CXSIZEFRAME) * 2 + 260;  // Add frame borders
+        int newHeight = imgHeight + GetSystemMetrics(SM_CYSIZEFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION) + 100;
+
+        pFrameWnd->SetWindowPos(nullptr, 0, 0, newWidth, newHeight, SWP_NOMOVE | SWP_NOZORDER);
+    }    
+}
 
 // Diagnóstico de CTrackStudioView
 
@@ -224,6 +271,3 @@ CTrackStudioDoc* CTrackStudioView::GetDocument() const // a versão sem depuraç
 	return (CTrackStudioDoc*)m_pDocument;
 }
 #endif //_DEBUG
-
-
-// Manipuladores de mensagens de CTrackStudioView
