@@ -4,11 +4,16 @@
 #include "Panel.h"
 #pragma once
 
+#include <atlimage.h>
+
 
 class CTrackStudioView : public CView
 {
 private:
 	Panel *panel;
+	CImage m_pngImage;
+	CString m_mapFilePath = _T("C:\\map.png");
+
 protected: // criar apenas com base na serialização
 	CTrackStudioView() noexcept;
 	DECLARE_DYNCREATE(CTrackStudioView)
@@ -20,6 +25,8 @@ public:
 // Operações
 private:
 	void LoadTrackFromDb();
+	void LoadMapImg();
+	void DrawMapImg(CDC* pDC);
 
 // Substitui
 public:
